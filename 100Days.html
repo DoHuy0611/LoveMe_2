@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Tiêu đề hiển thị trên tab trình duyệt -->
+    <title>TÌNH YÊU Ó</title>
+
+    <!-- Tạo icon cho tab -->
+    <link rel="icon" href="image/heart.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e4c9d1 0%, #d8b4c8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 410px;
+            max-height: 90vh;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b88;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Modal phóng to ảnh */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                height: 95vh;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Hiệu ứng tình yêu */
+        .love-text {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #ff6b88;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Nút đặc biệt */
+        .love-button {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #ff6b88, #ff8e9e);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .love-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #ff8e9e, #ff6b88);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Thêm thẻ audio để phát nhạc -->
+    <audio id="bgMusic" loop>
+        <source src="music/AAA1.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        // Phát nhạc khi trang load xong
+        window.addEventListener('load', function() {
+            var audio = document.getElementById('bgMusic');
+            audio.volume = 0.5; // Chỉnh âm lượng
+            
+            // Bắt đầu bằng sự kiện user gesture (giả lập)
+            function startAudio() {
+                audio.play().catch(e => {
+                    console.log("Autoplay bị chặn:", e);
+                    // Thử lại sau 1 giây
+                    setTimeout(startAudio, 1000);
+                });
+            }
+            
+            // Kích hoạt âm thanh thông qua sự kiện click ảo
+            document.body.click(); // Giả lập sự kiện click
+            
+            // Thử phát nhạc
+            startAudio();
+            
+            // Cho phép autoplay khi user tương tác
+            document.addEventListener('click', function() {
+                audio.play().catch(e => console.log(e));
+            }, { once: true });
+        });
+    </script>
+
+    <div class="container">
+        <h1>Tình Yêu Của Chúng Ta ❤️</h1>
+
+        <!-- <button id="openPageBtn" class="love-button">Mở Trang Đặc Biệt ❤️</button> -->
+      <!-- --BUTTON ĐẶC BIỆT--------------------------------------------------------------------------------------------------------------------------- -->
+    <button id="openPageBtn" class="love-button">Mở Trang Đặc Biệt ❤️</button>
+
+    <style>
+        .love-button {
+            display: block;
+            margin: 15px auto;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #ff6b88, #ff8e9e);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .love-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #ff8e9e, #ff6b88);
+        }
+    </style>
+
+    <script>
+        // Mở trang khác khi click nút
+        document.getElementById('openPageBtn').addEventListener('click', function () {
+            window.open('TraiTim.html', '_blank');
+            // Hoặc mở trong tab hiện tại: window.location.href = 'trang-dac-biet.html';
+        });
+    </script>
+
+    <!-- --BUTTON ĐẶC BIỆT--------------------------------------------------------------------------------------------------------------------------- -->
+
+
+        <div class="love-text">Mỗi khoảnh khắc bên em là điều tuyệt vời nhất</div>
+
+        <div class="gallery">
+            <!-- Danh sách ảnh -->
+            <div class="gallery-item">
+                <img src="image/a1.jpg" alt="Kỷ niệm 1">
+            </div>
+            <div class="gallery-item">
+                <img src="image/a2.jpg" alt="Kỷ niệm 2">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b1.jpg" alt="Kỷ niệm 3">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b2.jpg" alt="Kỷ niệm 4">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b3.jpg" alt="Kỷ niệm 5">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b4.jpg" alt="Kỷ niệm 6">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b5.jpg" alt="Kỷ niệm 7">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b6.jpg" alt="Kỷ niệm 8">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b7.jpg" alt="Kỷ niệm 9">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b8.png" alt="Kỷ niệm 10">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b9.png" alt="Kỷ niệm 11">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b10.png" alt="Kỷ niệm 12">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b11.png" alt="Kỷ niệm 13">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b12.png" alt="Kỷ niệm 14">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b13.png" alt="Kỷ niệm 15">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b14.png" alt="Kỷ niệm 16">
+            </div>
+            <div class="gallery-item">
+                <img src="image/b15.png" alt="Kỷ niệm 17">
+            </div>
+            <!-- Thêm các ảnh khác nếu cần -->
+        </div>
+
+        <div class="floating-hearts" id="floatingHearts"></div>
+    </div>
+
+    <!-- Modal phóng to ảnh -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="expandedImg">
+        </div>
+    </div>
+
+    <script>
+        // Mở trang khác khi click nút
+        document.getElementById('openPageBtn').addEventListener('click', function () {
+            window.open('a5__ copy.html', '_blank');
+        });
+
+        // Tạo hiệu ứng trái tim bay
+        function createHearts() {
+            const container = document.getElementById('floatingHearts');
+            const colors = ['#ff6b88', '#ff8e9e', '#ffb3c1', '#ffd7e1'];
+
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+
+                // Random vị trí và kích thước
+                const size = Math.random() * 20 + 10;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+
+                heart.style.left = `${posX}%`;
+                heart.style.top = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${size}px`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.opacity = Math.random() * 0.5 + 0.3;
+
+                container.appendChild(heart);
+            }
+        }
+
+        // Hiệu ứng khi hover vào ảnh
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function () {
+                const hearts = document.createElement('div');
+                hearts.innerHTML = '❤️';
+                hearts.style.position = 'absolute';
+                hearts.style.fontSize = '20px';
+                hearts.style.color = '#ff6b88';
+                hearts.style.animation = 'float 2s ease-out forwards';
+                hearts.style.left = `${Math.random() * 80 + 10}%`;
+                hearts.style.top = `${Math.random() * 80 + 10}%`;
+                hearts.style.pointerEvents = 'none';
+
+                this.appendChild(hearts);
+
+                setTimeout(() => {
+                    hearts.remove();
+                }, 2000);
+            });
+        });
+
+        // Hiệu ứng phóng to ảnh khi click
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', function () {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('expandedImg');
+                modal.style.display = 'flex';
+                modalImg.src = this.src;
+            });
+        });
+
+        // Đóng modal khi click nút X
+        document.querySelector('.close').addEventListener('click', function () {
+            document.getElementById('imageModal').style.display = 'none';
+        });
+
+        // Đóng modal khi click bên ngoài ảnh
+        document.getElementById('imageModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Khởi tạo hiệu ứng khi trang load
+        window.addEventListener('load', function () {
+            createHearts();
+
+            // Thêm hiệu ứng chữ nhấp nháy
+            const loveText = document.querySelector('.love-text');
+            setInterval(() => {
+                loveText.style.textShadow = `0 0 ${Math.random() * 10 + 5}px rgba(255, 107, 136, ${Math.random() * 0.5 + 0.5})`;
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

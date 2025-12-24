@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Story SN 🤎</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+   <!-- Giúp hiển thị tốt trên các thiết bị di động -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+
+  <!-- Custom CSS & JS -->
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+
+  <!-- Tạo icon cho tab -->
+    <link rel="icon" href="image/heart.png" type="image/png">
+
+     <!-- Thư viện hiệu ứng Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Font chữ từ Google Fonts -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&family=Be+Vietnam+Pro:wght@400;600;700&display=swap">
+
+
+  <!-- Favicon -->
+  <!--<link rel="icon" type="image/png" href="image/logoCN.png"> -->
+</head>
+
+<body>
+  <!-- ========================
+        PHẦN 1: NAVIGATION
+    ======================== -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand text-primary fw-bold" href=".">LoveU</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active text-light" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#dem-ngay">Story</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#kiniemdailau">Anniversary</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================
+        PHẦN 2: HERO PROFILE
+    ======================== -->
+  <section id="home" class="hero d-flex align-items-center text-white">
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-left">
+          <img src="image/IU2.jpg" class="profile-img" alt="Hình ảnh cặp đôi" />
+        </div>
+        <div class="content-right">
+          <h1 class="fw-bold">Hữu Sang ❤ <br> Như Nguyệt</h1>
+          <p>“Giữa thế giới rộng lớn này, tụi mình đã may mắn tìm thấy nhau — và từ đó, mọi khoảnh khắc đều trở nên ý
+            nghĩa hơn rất nhiều.”</p>
+          <div class="socials">
+            <a href="https://www.facebook.com/HuuSang.0912" class="text-white" title="Facebook Sang" target="_blank">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.facebook.com/nhu.nguyet.246287" class="text-white" title="Facebook Nguyệt"
+              target="_blank">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/cucdang_anh/" class="text-white" title="Instagram" target="_blank">
+              <i class="bi bi-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+        PHẦN 3: ĐẾM NGÀY YÊU
+    ======================== -->
+  <section id="dem-ngay" class="hero-section">
+    <div class="hero-content">
+      <h1>ĐẾM NGÀY YÊU</h1>
+      <div class="couple-names">
+        Trần Thị Như Nguyệt ❤️ Nguyễn Hữu Sang
+      </div>
+
+      <div class="love-count">
+        <!-- <div class="count-title">Hành Trình Yêu</div> -->
+        <div class="count-container">
+          <div class="count-box">
+            <div class="count-number" id="days">0</div>
+            <div class="count-label">Ngày</div>
+          </div>
+          <div class="count-box">
+            <div class="count-number" id="hours">0</div>
+            <div class="count-label">Giờ</div>
+          </div>
+          <div class="count-box">
+            <div class="count-number" id="minutes">0</div>
+            <div class="count-label">Phút</div>
+          </div>
+          <div class="count-box">
+            <div class="count-number" id="seconds">0</div>
+            <div class="count-label">Giây</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="love-anniversary">
+      <div class="love-date">❤️ 16/08/2025 - NGÀY YÊU NHAU ❤️</div>
+    </div>
+  </section>
+
+  <!-- ========================
+        PHẦN 4: GALLERY ẢNH CÓ AUDIO
+    ======================== -->
+  <div class="photo-gallery1">
+    <div class="photo-container1">
+      <img src="image/a3.jpg" alt="Ảnh của chúng ta">
+      <audio controls>
+        <source src="music/Yeu5.mp3" type="audio/mpeg">
+      </audio>
+      <div class="photo-caption1">MỘT EM BÉ XINH ĐẸP</div>
+    </div>
+
+    <div class="photo-container1">
+      <img src="image/a2.jpg" alt="Ảnh kỷ niệm">
+      <audio controls>
+        <source src="music/TungNgayYeuEm.mp3" type="audio/mpeg">
+      </audio>
+      <div class="photo-caption1">KHOẢNH KHẮC NẮM TAY ĐỒ Á ❤️</div>
+    </div>
+  </div>
+
+  <!-- ========================
+        PHẦN 5: THÔNG TIN CẶP ĐÔI
+    ======================== -->
+  <div class="couple-info">
+    <div class="person">
+      <div class="person-name">NGUYỄN HỮU SANG</div>
+      <div class="person-details">
+        <p>Ngày sinh: 09/12/2002</p>
+        <p>Cung hoàng đạo: <span class="zodiac">Nhân Mã ♐</span></p>
+        <p>Biệt danh: Chuột ú, Con nợ, Chồng iu ....</p>
+        <p>Tính cách: Năng động, lạc quan, thích phiêu lưu</p>
+        <p>Sở thích: Hun chủ nợ, ngắm chủ nợ, pla pla</p>
+      </div>
+    </div>
+
+    <div class="person">
+      <div class="person-name">TRẦN THỊ NHƯ NGUYỆT</div>
+      <div class="person-details">
+        <p>Ngày sinh: 21/08/2003</p>
+        <p>Cung hoàng đạo: <span class="zodiac">Sư Tử ♌</span></p>
+        <p>Biệt danh: Chủ nợ, bông hoa đẹp nhắt, Vợ iu....</p>
+        <p>Tính cách: Ấm áp, hào phóng, đầy nhiệt huyết</p>
+        <p>Sở thích: Siết nợ, hẹ hẹ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================
+        PHẦN 6: GALLERY ẢNH KỶ NIỆM
+    ======================== -->
+  <div class="photo-gallery-wrapper">   
+    <div class="photo-gallery">
+      <div class="photo-container">
+        <img src="image/DiXemPhim.jpg" alt="Đi xem phim">
+        <div class="photo-caption">Hai đứa năm tay đi xem phim Zootopia 2 ❤️❤️</div>
+      </div>
+    </div>
+    
+    <div class="photo-gallery">
+      <div class="photo-container">
+        <img src="image/a4.jpg" alt="Ngày chúng ta bên nhau">
+        <div class="photo-caption">Ngày chúng ta bên nhau</div>
+      </div>
+    </div>
+
+    <div class="photo-gallery">
+      <div class="photo-container">
+        <img src="image/100day.jpg" alt="Kỉ niệm 100 ngày">
+        <div class="photo-caption">Kỉ niệm 100❤️ ngày bên nhau nhoa</div>
+      </div>
+    </div>
+
+    <div class="photo-gallery">
+      <div class="photo-container">
+        <img src="image/BiGian.jpg" alt="Hình xinh">
+        <div class="photo-caption">Xinh quá đi hui ❤️❤️</div>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- ========================
+        PHẦN 7: CAROUSEL HÌNH ẢNH
+    ======================== -->
+  <div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <img src="image/namtay01.jpg" class="d-block w-100" alt="Hình ảnh kỷ niệm 5">
+      </div>
+      <div class="carousel-item active">
+        <img src="image/nt1.jpg" class="d-block w-100" alt="Hình ảnh kỷ niệm 1">
+      </div>
+      <div class="carousel-item">
+        <img src="image/nt2.jpg" class="d-block w-100" alt="Hình ảnh kỷ niệm 2">
+      </div>
+      <div class="carousel-item">
+        <img src="image/nt3.jpg" class="d-block w-100" alt="Hình ảnh kỷ niệm 3">
+      </div>
+      <div class="carousel-item">
+        <img src="image/nt4.jpg" class="d-block w-100" alt="Hình ảnh kỷ niệm 4">
+      </div>
+   
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- ========================  PHẦN 14: KỈ NIỆM CUỐI NĂM 2025 ======================= -->
+
+<section class="memory-gallery-section">
+  <div class="gallery-header">
+    <h2 class="gallery-title">
+    VƯỜN KỈ NIỆM ❤️❤️
+    </h2>
+    <p class="gallery-subtitle">Khoảnh khắc đáng nhớ của chúng ta ✨</p>
+  </div>
+
+  <div class="gallery-controls">
+    <button class="control-btn active" data-filter="all">Tất cả</button>
+    <button class="control-btn" data-filter="tamthang">8 Tháng</button>
+    <button class="control-btn" data-filter="travel">Du lịch</button>
+    <button class="control-btn" data-filter="special">Đặc biệt</button>
+  </div>
+
+  <!-- Container chính cho gallery 3D -->
+  <div class="memory-gallery" id="memoryGallery">
+    <!-- Ảnh sẽ được thêm bằng JavaScript từ dữ liệu trong HTML -->
+  </div>
+
+  <!-- Dữ liệu hình ảnh - có thể thêm trực tiếp trong HTML -->
+  <div id="galleryData" style="display: none;">
+    <!-- Thêm dữ liệu hình ảnh của bạn ở đây -->
+    <!-- Ví dụ: -->
+    <!-- <div data-image="image/8m9.jpg" data-title="Ngày đầu gặp gỡ" data-date="20/04/2025" data-category="tamthang"></div>
+    <div data-image="image/8m9.jpg" data-title="Khoảnh khắc đẹp" data-date="25/04/2025" data-category="tamthang"></div>
+   <div data-image="image/a4.jpg" data-title="Hạnh phúc bên nhau" data-date="30/04/2025" data-category="special"></div>
+    <div data-image="image/100day.jpg" data-title="100 ngày yêu" data-date="15/05/2025" data-category="special"></div>
+    <div data-image="image/BiGian.jpg" data-title="Lúc giận hờn" data-date="20/05/2025" data-category="special"></div>
+    <div data-image="image/DiXemPhim.jpg" data-title="Đi xem phim" data-date="25/05/2025" data-category="travel"></div> -->
+  </div>
+
+  <!-- Loading indicator -->
+  <div class="loading-indicator" id="loadingIndicator">
+    <div class="spinner"></div>
+    <p>Đang tải ảnh...</p>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" id="pagination">
+    <button class="page-btn prev-btn" id="prevPage" disabled>← Trước</button>
+    <div class="page-numbers" id="pageNumbers">
+      <span class="page-info">Trang <span id="currentPageNum">1</span>/<span id="totalPagesNum">1</span></span>
+    </div>
+    <button class="page-btn next-btn" id="nextPage" disabled>Sau →</button>
+  </div>
+
+  <!-- Thống kê -->
+  <div class="gallery-stats">
+    <div class="stat-item">
+      <span class="stat-number" id="totalPhotos">0</span>
+      <span class="stat-label">Ảnh</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" id="visiblePhotos">0</span>
+      <span class="stat-label">Đang hiển thị</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" id="filteredCategory">Tất cả</span>
+      <span class="stat-label">Danh mục</span>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+  <!-- ========================
+        PHẦN 8: LỊCH KỶ NIỆM
+    ======================== -->
+  <section id="skills" class="skills-section py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">LỊCH <span class="text-primary">LẤY LỜI</span></h2>
+
+      <div class="calendar-header">
+        <h1 id="month-year-title">Tháng 7, 2025</h1>
+      </div>
+
+      <div class="calendar-controls">
+        <button onclick="changeMonth(-1)">← Tháng trước</button>
+        <button onclick="changeMonth(1)">Tháng sau →</button>
+      </div>
+
+      <div class="day-names">
+        <div class="day-header">CN</div>
+        <div class="day-header">T2</div>
+        <div class="day-header">T3</div>
+        <div class="day-header">T4</div>
+        <div class="day-header">T5</div>
+        <div class="day-header">T6</div>
+        <div class="day-header">T7</div>
+      </div>
+
+      <div class="calendar" id="calendar"></div>
+      <div class="heart-corner">❤️</div>
+    </div>
+  </section>
+
+  <!-- ========================
+        PHẦN 9: TIMELINE KỶ NIỆM
+    ======================== -->
+  <hr>
+  <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+  <br> <br> <br> <br> <br> <br>
+  <div class="timeline">
+    <h2 class="timeline-title">Chuyến Tàu Tình Yêu</h2>
+    <br> <br> <br> <br> <br> <br>
+
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">20/04/2025</div>
+          <div class="timeline-text">Ngày đầu tiên chúng ta gặp nhau ở bến sông Bạch Đằng, trái tim tôi đã rung động từ
+            cái nhìn đầu tiên ❤️</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">27/04/2025</div>
+          <div class="timeline-text">Đi xem pháo bông ngắm kỉ niệm 50 năm Thống Nhất Đất Nước, tay trong tay dưới bầu
+            trời rực rỡ ✨</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">24/05/2025</div>
+          <div class="timeline-text">Đi siêu thị Eaon Mall Tân Phú, những khoảnh khắc đơn giản bên nhau lại là điều quý
+            giá nhất 🛒❤️</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">25-28/06/2025</div>
+          <div class="timeline-text">Bốn ngày hạnh phúc nhất, được ôm, được hun Cục Dàng đã ơi là đã ❤️❤️🥰🔥<br>Ký ức
+            không bao giờ phai nhòa...</div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">06/07/2025</div>
+          <div class="timeline-text">
+            Đi ăn mì cay nà, ôm cục dàng nàng, vlog đi chơi nà ❤️❤️<br>
+            (Bạn đang đọc tin này à? Tui ghiền bạn quá đi mất thôi! 💘)
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">Tương lai...</div>
+          <div class="timeline-text">Chúng ta sẽ còn viết thêm nhiều chương mới trong câu chuyện tình yêu này. Mỗi ngày
+            bên em là một trang sách đẹp 📖💕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+  <!-- ========================
+    PHẦN 10: VIDEO BUTTONS
+======================= -->
+  <div id="kiniemdailau">
+    <div class="video-section">
+      <div class="video-buttons-container">
+        <button class="open-video-btn" id="openVideoBtn1">
+          <i class="fas fa-heart video-icon"></i>
+          <h3>KỈ NIỆM 3 THÁNG BÊN NHAU<br>NHOÁ CỤC DÀNG ❤️</h3>
+        </button>
+
+        <button class="open-video-btn" id="openVideoBtn2">
+          <i class="fas fa-heart video-icon"></i>
+          <h3>KỈ NIỆM 100 NGÀY BÊN NHAU<br>NHOÁ CỤC DÀNG ❤️</h3>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================
+    PHẦN 11: VIDEO POPUP
+======================= -->
+  <div class="video-popup" id="videoPopup">
+    <div class="popup-overlay" id="popupOverlay"></div>
+    <div class="popup-content">
+      <div class="video-header">
+        <h3 class="video-title">Kỷ Niệm Tình Yêu</h3>
+        <button class="close-popup-btn" id="closeVideoBtn">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="video-wrapper">
+        <video id="myVideo" controls preload="metadata">
+          <source src="image/VideoA1.mp4" type="video/mp4">
+          Trình duyệt của bạn không hỗ trợ video HTML5.
+        </video>
+      </div>
+      <div class="video-info">
+        <p><i class="fas fa-clock"></i> Thời lượng: 3:45</p>
+        <p><i class="fas fa-calendar"></i> Ngày: 20/04/2025 - 20/07/2025</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================
+    PHẦN 12: LOVE COUNTER FOOTER
+======================= -->
+  <footer id="love-counter-footer">
+    <div class="love-counter-container">
+      <div class="counter-content">
+        <div class="counter-icon">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <div class="counter-text">
+          <h3>Hành Trình Tình Yêu</h3>
+          <p>Ngày bắt đầu: <span class="start-date">20/04/2025</span></p>
+          <div class="days-counter">
+            <span class="days-number" id="total-days">0</span>
+            <span class="days-text">ngày yêu nhau</span>
+          </div>
+          <p class="counter-message">Mỗi ngày qua đi là một trang mới trong câu chuyện tình yêu của chúng ta</p>
+        </div>
+      </div>
+      <div class="love-quote">
+        <i class="fas fa-quote-left"></i>
+        <p>"Tình yêu không phải là nhìn về một hướng, mà là cùng nhau nhìn về một hướng"</p>
+        <i class="fas fa-quote-right"></i>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================
+    PHẦN 13: CONTACT FOOTER
+======================= -->
+  <footer class="contact-footer" id="contact">
+    <div class="footer-wave">
+      <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path
+          d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+          opacity=".25" fill="currentColor"></path>
+        <path
+          d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+          opacity=".5" fill="currentColor"></path>
+        <path
+          d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+          fill="currentColor"></path>
+      </svg>
+    </div>
+
+    <div class="footer-container">
+      <div class="footer-logo-section">
+        <div class="footer-logo">
+          <div class="logo-circle">
+            <img src="image/logoCN.png" alt="Love Logo" class="logo-img">
+          </div>
+          <div class="logo-text">
+            <h2>Love Story</h2>
+            <p class="tagline">Sang ❤️ Nguyệt</p>
+          </div>
+        </div>
+        <p class="footer-description">Website được tạo với tất cả tình yêu và kỷ niệm đẹp của chúng mình</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/HuuSang.0912" class="social-link" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/cucdang_anh/" class="social-link" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="mailto:nguyenhuusang0912@gmail.com" class="social-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-contacts">
+        <div class="contact-column">
+          <h3 class="contact-title">
+            <i class="fas fa-male contact-icon"></i>
+            NGUYỄN HỮU SANG
+          </h3>
+          <div class="contact-divider"></div>
+          <ul class="contact-list">
+            <li>
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:nguyenhuusang0912@gmail.com">nguyenhuusang0912@gmail.com</a>
+            </li>
+            <li>
+              <i class="fas fa-phone"></i>
+              <a href="tel:0353321349">0353 321 349</a>
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Thành phố Tây Ninh, Việt Nam</span>
+            </li>
+            <li>
+              <i class="fas fa-birthday-cake"></i>
+              <span>Sinh nhật: 09/12/2002</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-column">
+          <h3 class="contact-title">
+            <i class="fas fa-female contact-icon"></i>
+            TRẦN THỊ NHƯ NGUYỆT
+          </h3>
+          <div class="contact-divider"></div>
+          <ul class="contact-list">
+            <li>
+              <i class="fas fa-envelope"></i>
+              <a href="mailto:nguyetnhu2108@gmail.com">nguyetnhu2108@gmail.com</a>
+            </li>
+            <li>
+              <i class="fas fa-phone"></i>
+              <a href="tel:0345507809">0345 507 809</a>
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Thành phố Hồ Chí Minh, Việt Nam</span>
+            </li>
+            <li>
+              <i class="fas fa-birthday-cake"></i>
+              <span>Sinh nhật: 21/08/2003</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2025 Love Story - Sang & Nguyệt. Made with <i class="fas fa-heart heart-icon"></i> by Hữu Sang
+      </p>
+      <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+        <span>Lên đầu trang</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ========================
+          SCRIPTS
+      ======================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>

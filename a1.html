@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff2d75;
+            --secondary-color: #ff6b9a;
+            --accent-color: #00ffaa;
+            --bg-color: #0f0c29;
+            --text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ============================
+           PHẦN 7: TIMELINE KỶ NIỆM
+        ============================ */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 40px;
+            background: rgba(15, 12, 41, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 45, 117, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        /* Hiệu ứng ánh sáng nền */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,45,117,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .timeline-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            position: relative;
+            text-shadow: 0 0 20px var(--primary-color);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px var(--primary-color); }
+            100% { text-shadow: 0 0 30px var(--primary-color), 0 0 40px var(--secondary-color); }
+        }
+
+        .timeline-title::after {
+            content: '❤️';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        /* Đường timeline với hiệu ứng */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            background: linear-gradient(to bottom, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                var(--accent-color));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -4px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--primary-color);
+            animation: lineGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes lineGlow {
+            0% { box-shadow: 0 0 10px var(--primary-color); }
+            100% { box-shadow: 0 0 30px var(--primary-color), 0 0 40px var(--secondary-color); }
+        }
+
+        .timeline-item {
+            padding: 25px 50px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 70px;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .timeline-item:nth-child(even) {
+            transform: translateX(100px);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0) !important;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 70px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 70px;
+        }
+
+        .timeline-content {
+            padding: 35px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hiệu ứng bóng đổ động */
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(255, 45, 117, 0.4);
+        }
+
+        .timeline-content:hover::before {
+            left: 100%;
+        }
+
+        .timeline-date {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.5s ease;
+        }
+
+        .timeline-content:hover .timeline-date::after {
+            width: 100%;
+        }
+
+        .timeline-text {
+            color: white;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-content:hover .timeline-text {
+            opacity: 1;
+        }
+
+        /* Dấu chấm trên timeline */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            top: 40px;
+            z-index: 2;
+            box-shadow: 0 0 20px var(--primary-color);
+            border: 3px solid var(--bg-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(255, 45, 117, 0.7),
+                           0 0 0 0 rgba(0, 255, 170, 0.4); 
+            }
+            50% { 
+                box-shadow: 0 0 0 15px rgba(255, 45, 117, 0),
+                           0 0 0 30px rgba(0, 255, 170, 0); 
+            }
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -15px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline {
+                padding: 20px;
+                margin: 50px auto;
+            }
+            
+            .timeline-title {
+                font-size: 2.5rem;
+            }
+            
+            .timeline-container::after {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+                left: 0 !important;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 15px;
+            }
+            
+            .timeline-content {
+                padding: 25px;
+            }
+        }
+
+        /* Nút quay lại đầu trang */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(255, 45, 117, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 45, 117, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================
+        PHẦN 7: TIMELINE KỶ NIỆM
+    ======================== -->
+    <div class="timeline">
+        <h2 class="timeline-title">Chuyến Tàu Tình Yêu</h2>
+
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">20/04/2025</div>
+                    <div class="timeline-text">Ngày đầu tiên chúng ta gặp nhau ở bến sông Bạch Đằng, trái tim tôi đã rung động từ cái nhìn đầu tiên ❤️</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">27/04/2025</div>
+                    <div class="timeline-text">Đi xem pháo bông ngắm kỉ niệm 50 năm Thống Nhất Đất Nước, tay trong tay dưới bầu trời rực rỡ ✨</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">24/05/2025</div>
+                    <div class="timeline-text">Đi siêu thị Eaon Mall Tân Phú, những khoảnh khắc đơn giản bên nhau lại là điều quý giá nhất 🛒❤️</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">25-28/06/2025</div>
+                    <div class="timeline-text">Bốn ngày hạnh phúc nhất, được ôm, được hun Cục Dàng đã ơi là đã ❤️❤️🥰🔥<br>Ký ức không bao giờ phai nhòa...</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">06/07/2025</div>
+                    <div class="timeline-text">
+                        Đi ăn mì cay nà, ôm cục dàng nàng, vlog đi chơi nà ❤️❤️<br>
+                        (Bạn đang đọc tin này à? Tui ghiền bạn quá đi mất thôi! 💘)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thêm nhiều kỷ niệm hơn -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Tương lai...</div>
+                    <div class="timeline-text">Chúng ta sẽ còn viết thêm nhiều chương mới trong câu chuyện tình yêu này. Mỗi ngày bên em là một trang sách đẹp 📖💕</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút quay lại đầu trang -->
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // Hiệu ứng scroll cho timeline
+        function initTimelineScroll() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Thêm hiệu ứng delay cho từng item
+                        const index = Array.from(timelineItems).indexOf(entry.target);
+                        entry.target.style.transitionDelay = (index * 0.2) + 's';
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '0px 0px -100px 0px'
+            });
+            
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        // Hiệu ứng hover cho timeline items
+        function initTimelineHover() {
+            const timelineContents = document.querySelectorAll('.timeline-content');
+            
+            timelineContents.forEach(content => {
+                content.addEventListener('mouseenter', () => {
+                    const dateElement = content.querySelector('.timeline-date');
+                    dateElement.style.color = '#ff2d75';
+                });
+                
+                content.addEventListener('mouseleave', () => {
+                    const dateElement = content.querySelector('.timeline-date');
+                    dateElement.style.color = '';
+                });
+            });
+        }
+
+        // Nút back to top
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Hiệu ứng mở đầu
+        function initEntranceAnimation() {
+            const timeline = document.querySelector('.timeline');
+            timeline.style.opacity = '0';
+            timeline.style.transform = 'translateY(50px)';
+            
+            setTimeout(() => {
+                timeline.style.transition = 'all 1s ease';
+                timeline.style.opacity = '1';
+                timeline.style.transform = 'translateY(0)';
+            }, 500);
+        }
+
+        // Hiệu ứng click vào timeline item
+        function initClickEffects() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            timelineItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const content = item.querySelector('.timeline-content');
+                    
+                    // Tạo hiệu ứng ripple
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 45, 117, 0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    const rect = content.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = rect.left + rect.width/2 - size/2;
+                    const y = rect.top + rect.height/2 - size/2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    
+                    document.body.appendChild(ripple);
+                    
+                    // Thêm style cho ripple animation
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes ripple {
+                            to {
+                                transform: scale(4);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    // Xóa ripple sau khi animation kết thúc
+                    setTimeout(() => {
+                        ripple.remove();
+                        style.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Khởi tạo tất cả
+        document.addEventListener('DOMContentLoaded', () => {
+            initTimelineScroll();
+            initTimelineHover();
+            initBackToTop();
+            initEntranceAnimation();
+            initClickEffects();
+            
+            console.log('❤️ Timeline tình yêu đã sẵn sàng!');
+        });
+
+        // Hiệu ứng parallax đơn giản
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const timeline = document.querySelector('.timeline');
+            const rate = scrolled * -0.5;
+            
+            timeline.style.transform = `translateY(${rate * 0.1}px)`;
+        });
+    </script>
+</body>
+</html>
